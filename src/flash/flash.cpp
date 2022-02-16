@@ -212,12 +212,8 @@ void init_flash()
   digitalWrite(SPI_CE, HIGH);
   flash_sleep(false);
 
-  // if(spiffs_mount() == SPIFFS_ERR_NOT_A_FS){
-  //   spiffs_format();
-  // }
+  spiffs_mount();
 }
-
-// Spiffs
 
 static s32_t spi_spiffs_read(u32_t addr, u32_t size, u8_t *dst)
 {
@@ -240,14 +236,11 @@ static s32_t spi_spiffs_erase(u32_t addr, u32_t size)
 
 s32_t spiffs_format()
 {
-  s32_t spiffs_res = SPIFFS_OK;
-  if(!is_spiffs_mounted()){
-    spiffs_mount();
-  }
+  is_fs_mounted = 0;
 
-  if(is_spiffs_mounted()){
+  s32_t spiffs_res = spiffs_mount();
+  if(spiffs_res != SPIFFS_ERR_NOT_A_FS){
     SPIFFS_unmount(&flash_fs);
-    is_fs_mounted = 0;
   }
 
   spiffs_res = SPIFFS_format(&flash_fs);

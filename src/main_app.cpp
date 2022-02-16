@@ -7,10 +7,10 @@ void init_app()
 	init_fast_spi();// needs to be before init_display and external flash
 	init_i2c();// needs to be before init_hrs3300, init_touch and init_accl
 	init_backlight();
+	init_flash();
 	init_display();
 	display_booting();
 	set_backlight(3);
-	init_flash();
 	init_touch();
 	init_sleep();
 	init_menu();

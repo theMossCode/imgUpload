@@ -97,7 +97,7 @@ public:
     }
     case state_format:
     {
-      spiffs_format();
+      // spiffs_format();
       if (!is_spiffs_mounted())
       {
         lv_label_set_text(main_label, LV_SYMBOL_CLOSE " Flash Init Error!\r\nPress and hold button to reboot");
@@ -105,14 +105,13 @@ public:
       }
       else
       {
-        lv_label_set_text(main_label, LV_SYMBOL_OK " Format Complete\nInitialising LV FS");
+        lv_label_set_text(main_label, LV_SYMBOL_OK "Initialising LV FS");
         state = state_mounted;
       }
       break;
     }
     case state_mounted:
     {
-      lv_fs_init();
       init_spiffs_lv();
       lv_label_set_text_fmt(main_label, "writing image:\n%s\nSize: %d", images[curr_img].name, 
                             images[curr_img].size);
